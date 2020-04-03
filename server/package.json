@@ -1,0 +1,22 @@
+{
+  "name": "rackner-digital-art-project",
+  "version": "1.0.0",
+  "description": "## Intro As a software engineer, you've been tasked to create a CRUD API for managing digital art",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --legacy-watch index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate": "node migrate.js",
+    "migrate:create": "migrate create --migrations-dir='./src/migrations'"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "pg": "^7.18.2"
+  }
+}

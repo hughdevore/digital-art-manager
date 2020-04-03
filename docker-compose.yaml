@@ -1,0 +1,40 @@
+version: "3"
+services:
+  frontend:
+    build: frontend
+    depends_on:
+      - app
+    environment: 
+      CI: "true" # allows create-react-app to run inside docker
+      REACT_APP_API_URL: "http://localhost:3100"
+    ports:
+      - "3000:3000"
+      - "35729:35729" # exposes websocket for live reload
+    command: yarn start
+    volumes:
+      - ./frontend:/app/
+      # - /app/node_modules
+
+  app:
+    build: server
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://user:pass@postgres:5432/db
+      NODE_ENV: development
+      PORT: 3100
+    ports:
+      - "3100:3100"
+    command: npm run dev
+    volumes:
+      - ./server:/app/
+      # - /app/node_modules
+
+  postgres:
+    image: postgres:10.4
+    ports:
+      - "35432:5432"
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: db
