@@ -1,16 +1,37 @@
-const express = require('express');
-const app = express();
-const cors = require('cors');
+// const express = require('express');
+// const app = express();
+// const cors = require('cors');
 const port = process.env.PORT;
 
-app.use(cors());
+// app.use(cors());
 
-// Feel free to remove this
-app.get('*', (req, res) => {
-  console.log('Server received it')
-  res.send('Hello World!')
-})
+// app.get('/api', (req, res) => {
+//   console.log(`Server received this: ${req}`)
+//   res.send({ data: 'Welcome to the API' });
+// })
 
-app.listen(port, () => {
-  console.log(`App started on port ${port}`);
+// app.get('*', (req, res) => {
+//   console.log(`Server received this: ${req}`)
+//   res.send('PICK A ROUTE');
+// })
+
+
+// app.listen(port, () => {
+//   console.log(`Listening on port ${port}`);
+// });
+
+const express = require('express');
+const bodyParser = require('body-parser');
+
+const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.get('/api', (req, res) => {
+  const name = req.query.name || 'World';
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
 });
+
+app.listen(port, () =>
+  console.log('Express server is running on localhost:3001')
+);
