@@ -1,20 +1,37 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser')
 const cors = require('cors');
 const port = process.env.PORT;
+const db = require('./queries');
 
 app.use(cors());
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
 
-app.get('/api', (req, res) => {
-  console.log(`Server received this: ${req}`)
-  res.send({ data: 'Welcome to the API' });
-})
+app.get('/', (request, response) => {
+  console.log(`Server received this: ${request}`)
+  response.send({ 
+    data: { 
+      message:'Welcome to the API!',
+      routes: {
+        getArt: 'GET request to /art',
+        createArt: 'POST request to /art',
+        updateArt: 'PUT request to /art',
+        deleteArt: 'DELETE request to /art',
+      }
+    }
+  });
+});
 
-app.get('*', (req, res) => {
-  console.log(`Server received this: ${req}`)
-  res.send('PICK A ROUTE');
-})
-
+app.get('/art', db.getArt);
+app.post('/art', db.createArt);
+app.put('/art', db.updateArt);
+app.delete('/art', db.deleteArt);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
