@@ -1,37 +1,21 @@
-// const express = require('express');
-// const app = express();
-// const cors = require('cors');
+const express = require('express');
+const app = express();
+const cors = require('cors');
 const port = process.env.PORT;
 
-// app.use(cors());
-
-// app.get('/api', (req, res) => {
-//   console.log(`Server received this: ${req}`)
-//   res.send({ data: 'Welcome to the API' });
-// })
-
-// app.get('*', (req, res) => {
-//   console.log(`Server received this: ${req}`)
-//   res.send('PICK A ROUTE');
-// })
-
-
-// app.listen(port, () => {
-//   console.log(`Listening on port ${port}`);
-// });
-
-const express = require('express');
-const bodyParser = require('body-parser');
-
-const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 
 app.get('/api', (req, res) => {
-  const name = req.query.name || 'World';
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
-});
+  console.log(`Server received this: ${req}`)
+  res.send({ data: 'Welcome to the API' });
+})
 
-app.listen(port, () =>
-  console.log('Express server is running on localhost:3001')
-);
+app.get('*', (req, res) => {
+  console.log(`Server received this: ${req}`)
+  res.send('PICK A ROUTE');
+})
+
+
+app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
+});

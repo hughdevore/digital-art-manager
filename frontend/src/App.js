@@ -15,18 +15,13 @@ class App extends Component {
         console.log('WOWEE');
         console.log(res);
         this.setState({ data: res.data });
-      })
-      .catch(err => {
-        console.log('HUH');
-        console.log(JSON.stringify(err));
-        this.setState({ data: err.data })
       });
   }
 
   // Fetches our GET route from the Express server. (Note the route we are fetching matches the GET route from server.js
   callBackendAPI = async () => {
-    const response = await axios.get('/api');
-    const body = await response.json();
+    const response = await axios.get('http://localhost:3100/api');
+    const body = response.data;
 
     if (response.status !== 200) {
       throw Error(body.message) 
@@ -35,7 +30,6 @@ class App extends Component {
   };
 
   render() {
-    //console.log(this.state);
     return (
       <div className="App">
         <header className="App-header">
