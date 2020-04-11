@@ -64,13 +64,18 @@ class App extends Component {
             >
               <List 
                 className="art-manager-list"
-                itemLayout="horizontal"
+                itemLayout="vertical"
                 dataSource={list}
                 renderItem={item => (
                   <Item
-                    actions={[
+                    extra={[
                       <Button size="small" key={item.id} onClick={() => this.updateArt(item.id)}>Edit</Button>,
                       <DeleteOutlined style={{paddingLeft: '2em'}} onClick={this.deleteArt} twoToneColor="black" />
+                    ]}
+                    actions={[
+                      <span>Artist: {item.artist}</span>,
+                      <span>Height: {item.width}</span>,
+                      <span>Width: {item.width}</span>
                     ]}
                   >
                     <Skeleton title={false} loading={item.loading} active>
