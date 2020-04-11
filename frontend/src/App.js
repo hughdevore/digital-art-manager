@@ -52,14 +52,14 @@ class App extends Component {
     const { list } = this.state;
     return (
       <Fragment>
-        <Layout>
+        <Layout style={{minHeight: '100vh'}}>
           <Header>
             <h1 style={{color: 'white'}}>Digital Art Manager</h1>
           </Header>
           <Layout>
             <Content
               style={{
-                padding: '3em 5em'
+                padding: '3em'
               }}
             >
               <List 
@@ -68,7 +68,10 @@ class App extends Component {
                 dataSource={list}
                 renderItem={item => (
                   <Item
-                    actions={[<Button key={item.id} onClick={() => this.updateArt(item.id)}>Edit</Button>, <DeleteOutlined onClick={this.deleteArt} twoToneColor="#eb2f96" />]}
+                    actions={[
+                      <Button size="small" key={item.id} onClick={() => this.updateArt(item.id)}>Edit</Button>,
+                      <DeleteOutlined style={{paddingLeft: '2em'}} onClick={this.deleteArt} twoToneColor="black" />
+                    ]}
                   >
                     <Skeleton title={false} loading={item.loading} active>
                       <Item.Meta
@@ -87,6 +90,7 @@ class App extends Component {
                 backgroundColor: 'rgb(171, 177, 186)',
               }}
             >
+              <h1 style={{fontSize: '1.5em'}}>Add New Art to the Manager</h1>
               <CreateArtForm />
             </Sider>
           </Layout>

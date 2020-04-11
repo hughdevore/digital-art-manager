@@ -27,6 +27,7 @@ const CreateArtForm = (props) => {
   
   const onFinish = values => {
     console.log("Received values of form: ", values);
+    // @TODO: Send API request and update Art List.
   };
 
   return (
