@@ -1,71 +1,97 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import axios from 'axios';
-import { Button, Layout, List, Skeleton } from 'antd';
 import './App.css';
+import {
+  Button,
+  Layout,
+  List,
+  Skeleton
+} from 'antd';
+import CreateArtForm from './components/CreateArtForm';
+import { DeleteOutlined } from '@ant-design/icons';
 
-const { Content, Header } = Layout;
+const { Content, Header, Sider } = Layout;
+const { Item } = List;
 
 class App extends Component {
   state = {
     initLoading: true,
-    data: [],
     list: [],
     loading: false,
   };
 
   componentDidMount() {
-      // Call our fetch function below once the component mounts
-    this.callBackendAPI()
+    this.getArtList()
       .then(response => {
-        console.log('WOWEE');
-        console.log(response);
         this.setState({ 
-          data: response,
           list: response,
         });
       });
   }
 
-  // Fetches our GET route from the Express server. (Note the route we are fetching matches the GET route from server.js
-  callBackendAPI = async () => {
+  getArtList = async () => {
     const response = await axios.get('http://localhost:3100/art');
     const body = response.data;
-
     if (response.status !== 200) {
       throw Error(body.message) 
     }
     return body;
-  };
+  }
+
+  updateArt = async (e) => {
+    console.log('UPDATE ME!!!!');
+    console.log(e.target)
+  }
+
+  deleteArt = async (e) => {
+    console.log('DELETE ME!!!!');
+    console.log(e);
+  }
 
   render() {
-    const { initLoading, loading, list } = this.state;
+    const { list } = this.state;
     return (
-      <div className="App">
+      <Fragment>
         <Layout>
           <Header>
-            <h1>Digital Art Manager</h1>
+            <h1 style={{color: 'white'}}>Digital Art Manager</h1>
           </Header>
-          <Content>
-            <List 
-              className="art-manager-list"
-              itemLayout="horizontal"
-              dataSource={list}
-              renderItem={item => (
-                <List.Item
-                  actions={[<a key={"edit-"+item.id}>Edit</a>, <a key={"delete-"+item.id}>Delete</a>]}
-                >
-                  <Skeleton title={false} loading={item.loading} active>
-                    <List.Item.Meta
-                      title={<a href="https://ant.design">{item.name}</a>}
-                      description={item.description}
-                    />
-                  </Skeleton>
-                </List.Item>
-              )}
-            />
-          </Content>
+          <Layout>
+            <Content
+              style={{
+                padding: '3em 5em'
+              }}
+            >
+              <List 
+                className="art-manager-list"
+                itemLayout="horizontal"
+                dataSource={list}
+                renderItem={item => (
+                  <Item
+                    actions={[<Button key={item.id} onClick={() => this.updateArt(item.id)}>Edit</Button>, <DeleteOutlined onClick={this.deleteArt} twoToneColor="#eb2f96" />]}
+                  >
+                    <Skeleton title={false} loading={item.loading} active>
+                      <Item.Meta
+                        title={item.name}
+                        description={item.description}
+                      />
+                    </Skeleton>
+                  </Item>
+                )}
+              />
+            </Content>
+            <Sider
+              width={350}
+              style={{
+                padding: '2em',
+                backgroundColor: 'rgb(171, 177, 186)',
+              }}
+            >
+              <CreateArtForm />
+            </Sider>
+          </Layout>
         </Layout>
-      </div>
+      </Fragment>
     );
   }
 }
