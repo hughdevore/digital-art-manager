@@ -10,6 +10,7 @@ import {
 } from 'antd';
 
 const FormItem = Form.Item;
+const { TextArea } = Input;
 
 const FormInput = {
   color: 'white',
@@ -57,6 +58,7 @@ const CreateArtForm = (props) => {
           console.log('Notification Clicked!');
         },
       });
+      props.getArtList();
     }
   };
 
@@ -81,8 +83,8 @@ const CreateArtForm = (props) => {
       <FormItem name="height" style={FormInput} label="Height">
         <Input />
       </FormItem>
-      <FormItem name="description" style={FormInput} label="Description">
-        <Input />
+      <FormItem name="description" style={FormInput} type="textarea" label="Description" >
+        <TextArea rows={4} />
       </FormItem>
       <FormItem name="date" style={FormInput} label="Date">
         <DatePicker />

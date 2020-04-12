@@ -4,8 +4,22 @@
   color: white;
 }
 
-.art-manager-list {
-  height: 80vh;
+.art-manager-header {
+  height: 6em;
+}
+
+.art-manager-header h1 {
+  color: white;
+  font-size: 2em;
+  padding-top: .4em;
+  font-weight: 700;
+  border-bottom: black 1px solid;
+}
+
+.art-manager-list-container {
+  padding:1.5em 2em;
+  background-color: white;
+  height: 82vh;
 }
 
 .ant-list-item-action li {
@@ -14,4 +28,24 @@
 
 .ant-modal-content {
   box-shadow: 0 0 5px rgb(171, 177, 186);
+}
+
+.update-art-form-header {
+  border-bottom: 2px solid #001529;
+  width: 33%;
+  font-size: 1.25em;
+}
+
+.app-footer {
+  background-color: #001529;
+  text-align: right;
+}
+
+.github-logo {
+  height: 2.5em;
+  image-rendering: -moz-crisp-edges;         /* Firefox */
+  image-rendering:   -o-crisp-edges;         /* Opera */
+  image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+  image-rendering: crisp-edges;
+  -ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
 }

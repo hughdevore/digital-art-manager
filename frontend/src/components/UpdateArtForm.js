@@ -8,6 +8,7 @@ import {
 } from 'antd';
 
 const FormItem = Form.Item;
+const { TextArea } = Input;
 
 const FormStyle = {
   color: 'white',
@@ -22,6 +23,10 @@ const layout = {
 const UpdateArtForm = (props) => {
   const { id, description, name } = props.art;
   const [form] = Form.useForm();
+
+  console.log(id);
+  console.log(description);
+  console.log(name);
   
   const onFinish = async (values) => {
     console.log(values);
@@ -50,6 +55,7 @@ const UpdateArtForm = (props) => {
           console.log('Notification Clicked!');
         },
       });
+      props.getArtList();
     }
   };
 
@@ -61,15 +67,20 @@ const UpdateArtForm = (props) => {
       style={FormStyle}
       onFinish={onFinish}
       labelAlign="left"
+      initialValues={{
+        id: id,
+        name: name,
+        description: description,
+      }}
     >
       <FormItem name="id" label="Art ID">
-        <Input disabled={true} defaultValue={id} />
+        <Input value={id} disabled={true} />
       </FormItem>
       <FormItem name="name" label="Name">
         <Input defaultValue={name} />
       </FormItem>
-      <FormItem name="description" label="Description">
-        <Input defaultValue={description} />
+      <FormItem name="description" type="textarea" label="Description">
+        <TextArea defaultValue={description} rows={4} />
       </FormItem>
       <FormItem>
         <Button type="primary" htmlType="submit">Update</Button>
