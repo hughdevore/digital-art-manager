@@ -30,6 +30,15 @@
   box-shadow: 0 0 5px rgb(171, 177, 186);
 }
 
+.ant-drawer-header {
+  height: 6em;
+  padding: 2em;
+}
+
+.ant-drawer-title {
+  font-size: 1.5em;
+}
+
 .update-art-form-header {
   border-bottom: 2px solid #001529;
   width: 33%;

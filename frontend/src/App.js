@@ -7,6 +7,7 @@ import {
   Drawer,
   Layout,
   List,
+  notification,
 } from 'antd';
 import CreateArtForm from './components/CreateArtForm';
 import UpdateArtForm from './components/UpdateArtForm';
@@ -44,9 +45,21 @@ class App extends Component {
     });
   }
 
-  deleteArt = async (e) => {
-    console.log('DELETE ME!!!!');
-    console.log(e);
+  deleteArt = async (id) => {
+    const response = await axios.delete('http://localhost:3100/art', { params: { id } });
+    const body = response.data;
+    if (response.status !== 200) {
+      notification.error({
+        message: 'Error, your art could not be deleted.',
+        description: body.message,
+      });
+    } else {
+      notification.success({
+        message: 'Your art was deleted from sthe manager!',
+        description: body.message,
+      });
+      this.getArtList();
+    }
   }
 
   showDrawer = () => {
@@ -91,7 +104,7 @@ class App extends Component {
                         });
                         this.showDrawer();
                       }}>Edit</Button>,
-                      <DeleteOutlined style={{paddingLeft: '2em'}} onClick={this.deleteArt} twoToneColor="black" />
+                      <DeleteOutlined style={{paddingLeft: '2em'}} onClick={() => {this.deleteArt(item.id)}} twoToneColor="black" />
                     ]}
                     actions={[
                       <span><strong>Artist: </strong>{item.artist}</span>,

@@ -43,17 +43,11 @@ const UpdateArtForm = (props) => {
       notification.error({
         message: 'Error, your art could not be added to the manager.',
         description: body.message,
-        onClick: () => {
-          console.log('Notification Clicked!');
-        },
       });
     } else {
       notification.success({
         message: 'Your art was updated in the manager!',
         description: body.message,
-        onClick: () => {
-          console.log('Notification Clicked!');
-        },
       });
       props.getArtList();
     }

@@ -53,7 +53,8 @@ const updateArt = (request, response) => {
 }
 
 const deleteArt = (request, response) => {
-  const id = parseInt(request.params.id);
+  // console.log(request.body);
+  const id = parseInt(request.body.id);
   pool.query(
     'DELETE FROM art WHERE id = $1',
     [id],
