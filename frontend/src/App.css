@@ -3,3 +3,15 @@
 .formInput {
   color: white;
 }
+
+.art-manager-list {
+  height: 80vh;
+}
+
+.ant-list-item-action li {
+  cursor: default;
+}
+
+.ant-modal-content {
+  box-shadow: 0 0 5px rgb(171, 177, 186);
+}

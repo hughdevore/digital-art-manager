@@ -5,9 +5,10 @@ import {
   Button,
   Layout,
   List,
-  Skeleton
+  Modal,
 } from 'antd';
 import CreateArtForm from './components/CreateArtForm';
+import UpdateArtForm from './components/UpdateArtForm';
 import { DeleteOutlined } from '@ant-design/icons';
 
 const { Content, Header, Sider } = Layout;
@@ -18,6 +19,12 @@ class App extends Component {
     initLoading: true,
     list: [],
     loading: false,
+    visible: false,
+    updateArt: {
+      id: null,
+      description: null,
+      name: null,
+    }
   };
 
   componentDidMount() {
@@ -38,15 +45,37 @@ class App extends Component {
     return body;
   }
 
-  updateArt = async (e) => {
-    console.log('UPDATE ME!!!!');
-    console.log(e.target)
-  }
-
   deleteArt = async (e) => {
     console.log('DELETE ME!!!!');
     console.log(e);
   }
+
+  showModal = (item) => {
+    console.log(item);
+    this.setState({
+      visible: true,
+      updateArt: {
+        id: item.id,
+        description: item.description,
+        name: item.name,
+      }
+    });
+  };
+
+  handleOk = e => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
+
+  handleCancel = e => {
+    console.log(e);
+    this.setState({
+      visible: false,
+    });
+  };
+
 
   render() {
     const { list } = this.state;
@@ -66,27 +95,36 @@ class App extends Component {
                 className="art-manager-list"
                 itemLayout="vertical"
                 dataSource={list}
+                size="large"
                 renderItem={item => (
                   <Item
                     extra={[
-                      <Button size="small" key={item.id} onClick={() => this.updateArt(item.id)}>Edit</Button>,
+                      <Button size="small" key={item.id} onClick={() => this.showModal(item)}>Edit</Button>,
                       <DeleteOutlined style={{paddingLeft: '2em'}} onClick={this.deleteArt} twoToneColor="black" />
                     ]}
                     actions={[
-                      <span>Artist: {item.artist}</span>,
-                      <span>Height: {item.width}</span>,
-                      <span>Width: {item.width}</span>
+                      <span><strong>Artist: </strong>{item.artist}</span>,
+                      <span><strong>Height: </strong>{item.width}</span>,
+                      <span><strong>Width: </strong>{item.width}</span>,
                     ]}
                   >
-                    <Skeleton title={false} loading={item.loading} active>
-                      <Item.Meta
-                        title={item.name}
-                        description={item.description}
-                      />
-                    </Skeleton>
+                    <Item.Meta
+                      title={item.name}
+                      description={item.description}
+                    />
                   </Item>
                 )}
               />
+              <Modal
+                title="Update this Art"
+                visible={this.state.visible}
+                onOk={this.handleOk}
+                onCancel={this.handleCancel}
+                footer={null}
+                mask={false}
+              >
+                <UpdateArtForm art={this.state.updateArt} />
+              </Modal>
             </Content>
             <Sider
               width={350}

@@ -26,13 +26,16 @@ const createArt = (request, response) => {
     height,
     date,
   } = request.body;
-
-  pool.query('INSERT INTO art(name,artist,description, width, height,date', [name, artist, description, width, height, date], (error, results) => {
-    if (error) {
-      throw error;
+  pool.query(
+    'INSERT INTO art(name, artist, description, width, height, date) VALUES ($1, $2, $3, $4, $5, $6)',
+    [name, artist, description, width, height, date],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      response.status(201).send(`User added with ID: ${results.insertId}`);
     }
-    response.status(201).send(`User added with ID: ${result.insertId}`);
-  });
+  );
 }
 
 const updateArt = (request, response) => {

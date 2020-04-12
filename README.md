@@ -49,7 +49,10 @@ _The Express app is running at http://192.168.99.100:3100_
 _The React SPA is running at http://192.168.99.100:3000_
 
 
-## DB Migrations
+## DB MGMT & Migrations
+To access the database and create/drop tables:
+`psql postgres://user:pass@localhost:35432/db`
+
 While docker-compose up is running, in a new terminal run `docker-compose run app bash` to start a bash shell inside the app container. From there, you can run the following migration commands:
 - npm run migrate up will run the migrations.
 - npm run migrate down will roll back the migrations.

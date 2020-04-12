@@ -1,19 +1,13 @@
 import React from 'react';
-import moment from 'moment';
 import axios from 'axios';
 import {
   Button,
-  DatePicker,
   Form,
   Input,
   notification,
 } from 'antd';
 
 const FormItem = Form.Item;
-
-const FormInput = {
-  color: 'white',
-}
 
 const FormStyle = {
   color: 'white',
@@ -25,23 +19,22 @@ const layout = {
   wrapperCol: { span: 16 },
 };
 
-const CreateArtForm = (props) => {
+const UpdateArtForm = (props) => {
+  const { id, description, name } = props.art;
   const [form] = Form.useForm();
   
   const onFinish = async (values) => {
-    const { artist, date, description, height, name, width } = values;
+    console.log(values);
+    const { description, name } = values;
     let art = {
-      artist: artist ? artist : 'Hughie Devore',
-      date: date ? date.format('YYYY-MM-DD') : moment().format('YYYY-MM-DD'),
+      id,
       description: description ? description : 'A beautiful view of snowy peaks in the rocky mountains.',
-      height: height ? height : 1000,
       name: name ? name : 'Rocky Mountain Masterpiece',
-      width: width ? width : 1250,
     };
 
-    const response = await axios.post('http://localhost:3100/art', art);
+    const response = await axios.put('http://localhost:3100/art', art);
     const body = response.data;
-    if (response.status !== 201) {
+    if (response.status !== 200) {
       notification.error({
         message: 'Error, your art could not be added to the manager.',
         description: body.message,
@@ -51,7 +44,7 @@ const CreateArtForm = (props) => {
       });
     } else {
       notification.success({
-        message: 'Your art was added to the manager!',
+        message: 'Your art was updated in the manager!',
         description: body.message,
         onClick: () => {
           console.log('Notification Clicked!');
@@ -63,35 +56,26 @@ const CreateArtForm = (props) => {
   return (
     <Form
       form={form}
-      name="create-art"
+      name="update-art"
       {...layout}
       style={FormStyle}
       onFinish={onFinish}
       labelAlign="left"
     >
-      <FormItem name="name" style={FormInput} label="Name">
-        <Input />
+      <FormItem name="id" label="Art ID">
+        <Input disabled={true} defaultValue={id} />
       </FormItem>
-      <FormItem name="artist" style={FormInput} label="Artist">
-        <Input />
+      <FormItem name="name" label="Name">
+        <Input defaultValue={name} />
       </FormItem>
-      <FormItem name="width" style={FormInput} label="Width">
-        <Input />
-      </FormItem>
-      <FormItem name="height" style={FormInput} label="Height">
-        <Input />
-      </FormItem>
-      <FormItem name="description" style={FormInput} label="Description">
-        <Input />
-      </FormItem>
-      <FormItem name="date" style={FormInput} label="Date">
-        <DatePicker />
+      <FormItem name="description" label="Description">
+        <Input defaultValue={description} />
       </FormItem>
       <FormItem>
-        <Button type="primary" htmlType="submit">Submit</Button>
+        <Button type="primary" htmlType="submit">Update</Button>
       </FormItem>
     </Form>
   );
 }
 
-export default CreateArtForm;
+export default UpdateArtForm;

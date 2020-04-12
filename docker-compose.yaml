@@ -3,7 +3,7 @@ services:
   frontend:
     build: frontend
     depends_on:
-      - app
+      - server
     environment: 
       CI: "true" # allows create-react-app to run inside docker
       REACT_APP_API_URL: "http://localhost:3100"
@@ -13,9 +13,9 @@ services:
     command: yarn start
     volumes:
       - ./frontend:/app/
-      # - /app/node_modules
+      - /app/node_modules
 
-  app:
+  server:
     build: server
     depends_on:
       - postgres
@@ -28,7 +28,7 @@ services:
     command: npm run dev
     volumes:
       - ./server:/app/
-      # - /app/node_modules
+      - /app/node_modules
 
   postgres:
     image: postgres:10.4
