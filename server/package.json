@@ -13,15 +13,18 @@
   "author": "Hughie Devore",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "jest": "^25.3.0",
+    "nodemon": "^2.0.2",
+    "supertest": "^4.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "jest": "^25.3.0",
-    "pg": "^8.0.2",
-    "supertest": "^4.0.2"
+    "pg": "^8.0.2"
   },
   "repository": {
     "type": "git",
