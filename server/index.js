@@ -30,6 +30,7 @@ app.get('/', (request, response) => {
 });
 
 app.get('/art', db.getArt);
+app.get('/art', db.getArtById);
 app.post('/art', db.createArt);
 app.put('/art/:id', db.updateArt);
 app.delete('/art/:id', db.deleteArt);
