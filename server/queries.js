@@ -79,6 +79,7 @@ const deleteArt = (request, response) => {
 
 module.exports = {
   getArt,
+  getArtById,
   createArt,
   updateArt,
   deleteArt,
