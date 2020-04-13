@@ -48,6 +48,7 @@
 .app-footer {
   background-color: #001529;
   text-align: right;
+  padding-top: 1.25em;
 }
 
 .github-logo {

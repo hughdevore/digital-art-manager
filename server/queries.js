@@ -39,7 +39,8 @@ const createArt = (request, response) => {
 }
 
 const updateArt = (request, response) => {
-  const { id, name, description } = request.body;
+  const id = parseInt(request.params.id);
+  const { name, description } = request.body;
   pool.query(
     'UPDATE art SET name = $1, description = $2 WHERE id = $3',
     [name, description, id],
@@ -53,8 +54,7 @@ const updateArt = (request, response) => {
 }
 
 const deleteArt = (request, response) => {
-  // console.log(request.body);
-  const id = parseInt(request.body.id);
+  const id = parseInt(request.params.id);
   pool.query(
     'DELETE FROM art WHERE id = $1',
     [id],

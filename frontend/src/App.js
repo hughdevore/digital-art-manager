@@ -8,6 +8,7 @@ import {
   Layout,
   List,
   notification,
+  Popconfirm,
 } from 'antd';
 import CreateArtForm from './components/CreateArtForm';
 import UpdateArtForm from './components/UpdateArtForm';
@@ -46,7 +47,8 @@ class App extends Component {
   }
 
   deleteArt = async (id) => {
-    const response = await axios.delete('http://localhost:3100/art', { params: { id } });
+    console.log(id);
+    const response = await axios.delete(`http://localhost:3100/art/${id}`);
     const body = response.data;
     if (response.status !== 200) {
       notification.error({
@@ -104,7 +106,18 @@ class App extends Component {
                         });
                         this.showDrawer();
                       }}>Edit</Button>,
-                      <DeleteOutlined style={{paddingLeft: '2em'}} onClick={() => {this.deleteArt(item.id)}} twoToneColor="black" />
+                      <Popconfirm
+                        placement="topRight"
+                        title="Are you sure you want to delete this?"
+                        okText="Yes"
+                        cancelText="No"
+                        onConfirm={() => {this.deleteArt(item.id)}}
+                      >
+                        <DeleteOutlined 
+                          style={{paddingLeft: '2em'}}
+                          twoToneColor="black"
+                        />
+                      </Popconfirm>
                     ]}
                     actions={[
                       <span><strong>Artist: </strong>{item.artist}</span>,

@@ -6,6 +6,7 @@ const port = process.env.PORT;
 const db = require('./queries');
 
 app.use(cors());
+app.enable('trust proxy')
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
@@ -30,8 +31,8 @@ app.get('/', (request, response) => {
 
 app.get('/art', db.getArt);
 app.post('/art', db.createArt);
-app.put('/art', db.updateArt);
-app.delete('/art', db.deleteArt);
+app.put('/art/:id', db.updateArt);
+app.delete('/art/:id', db.deleteArt);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

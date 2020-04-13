@@ -37,7 +37,7 @@ const UpdateArtForm = (props) => {
       name: name ? name : 'Rocky Mountain Masterpiece',
     };
 
-    const response = await axios.put('http://localhost:3100/art', art);
+    const response = await axios.put(`http://localhost:3100/art/${id}`, art);
     const body = response.data;
     if (response.status !== 200) {
       notification.error({
