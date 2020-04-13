@@ -78,6 +78,7 @@ const deleteArt = (request, response) => {
 }
 
 module.exports = {
+  pool,
   getArt,
   getArtById,
   createArt,
