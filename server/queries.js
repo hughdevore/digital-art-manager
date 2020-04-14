@@ -1,10 +1,9 @@
-const db = process.env.NODE_ENV === "test" ? "db-test" : "db";
 const Pool = require('pg').Pool;
 
 const pool = new Pool({
   user: 'user',
   host: 'postgres',
-  database: db,
+  database: 'db',
   password: 'pass',
   port: 5432,
 });

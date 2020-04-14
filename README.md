@@ -50,13 +50,27 @@ _The React SPA is running at http://192.168.99.100:3000_
 
 
 ## DB MGMT & Migrations
-To access the database and create/drop tables:
+To access the database:
 `psql postgres://user:pass@localhost:35432/db`
 
 While docker-compose up is running, in a new terminal run `docker-compose run app bash` to start a bash shell inside the app container. From there, you can run the following migration commands:
 - npm run migrate up will run the migrations.
 - npm run migrate down will roll back the migrations.
 - npm run migrate:create <migration-name> will create a new migration file in src/migrations folder.
+
+## Tests
+Both the server and frontend can be tested by running `yarn test` in either directory.
+
+In order to run the server-side API tests we will need to set up a `db_test` database to run tests against.
+1. Install postgresql
+  - `brew install postgresql`
+2. Start postgresql
+  - `brew services start postgresql`
+3. Access postgres using your user
+  - `psql postgres -U hughiedevore`
+4. Create the test database
+  - `CREATE DATABASE db_test`
+5. Use this db in all tests
 
 ## Challenge
 1. Create a CRUD RESTful API for the Art, using Express and PostgreSQL
