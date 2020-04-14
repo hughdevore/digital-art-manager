@@ -35,15 +35,9 @@ services:
     ports:
       - "35432:5432"
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: db
+      - POSTGRES_MULTIPLE_DATABASES="db","db_test"
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass
     volumes:
+      - ./docker-postgresql-multiple-databases:/docker-entrypoint-initdb.d
       - ./postgres-data:/var/lib/postgresql/data
-
-  postgres_test:
-    image: postgres:10.4
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: db_test

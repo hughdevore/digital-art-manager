@@ -128,7 +128,7 @@ class App extends Component {
                     <Item.Meta
                       key={`item-${item.id}`}
                       title={item.name}
-                      description={moment(item.date).format("ll")}
+                      description={moment.utc(item.date).format("ll")}
                     />
                     {item.description}
                   </Item>

@@ -1,16 +1,10 @@
 process.env.NODE_ENV = "test";
 const app = require("./server");
 const supertest = require("supertest");
-const Pool = require('pg').Pool;
-
-console.log( 'TESTING' );
-pool = new Pool({
-  host: 'localhost',
-  database: 'db_test',
-});
+const db = require('./queries');
 
 beforeAll(async () => {
-  await pool.query("CREATE TABLE art( id SERIAL PRIMARY KEY, name TEXT, artist TEXT, description TEXT, width INT, height INT, date DATE )");
+  await db.pool.query("CREATE TABLE art( id SERIAL PRIMARY KEY, name TEXT, artist TEXT, description TEXT, width INT, height INT, date DATE )");
 });
 
 beforeEach(async () => {
@@ -22,18 +16,18 @@ beforeEach(async () => {
   const date = "2020-04-07";
 
   // seed with some data
-  await pool.query(
+  await db.pool.query(
     'INSERT INTO art(name, artist, description, width, height, date) VALUES ($1, $2, $3, $4, $5, $6), ($1, $2, $3, $4, $5, $6)',
     [name, artist, description, width, height, date],
   );
 });
 
 afterEach(async () => {
-  await pool.query("DELETE FROM art");
+  await db.pool.query("DELETE FROM art");
 });
 
 afterAll(async () => {
-  await pool.query("DROP TABLE art");
+  await db.pool.query("DROP TABLE art");
   pool.end();
 });
 

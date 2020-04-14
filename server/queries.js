@@ -1,15 +1,16 @@
+const db = process.env.NODE_ENV === "test" ? "db-test" : "db";
 const Pool = require('pg').Pool;
 
 const pool = new Pool({
   user: 'user',
   host: 'postgres',
-  database: 'db',
+  database: db,
   password: 'pass',
   port: 5432,
 });
 
 const getArt = (request, response) => {
-  pool.query('SELECT * FROM art ORDER BY id ASC', (error, results) => {
+  pool.query('SELECT * FROM art ORDER BY id DESC', (error, results) => {
     if (error) {
       throw error;
     }
