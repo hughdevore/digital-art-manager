@@ -53,13 +53,20 @@ _The React SPA is running at http://192.168.99.100:3000_
 To access the database:
 `psql postgres://user:pass@localhost:35432/db`
 
-While docker-compose up is running, in a new terminal run `docker-compose run app bash` to start a bash shell inside the app container. From there, you can run the following migration commands:
+While docker-compose up is running, in a new terminal run `docker-compose run server bash` to start a bash shell inside the app container. From there, you can run the following migration commands:
 - npm run migrate up will run the migrations.
 - npm run migrate down will roll back the migrations.
 - npm run migrate:create <migration-name> will create a new migration file in src/migrations folder.
 
 ## Tests
-Both the server and frontend can be tested by running `yarn test` in either directory.
+In order to access the test database during the test you sill need to run these commands from within the docker container. This can be done by running: 
+
+`docker-compose run server bash`
+
+Both the server and frontend directories can be tested by running `yarn test` within either.
+
+The test database can be accessed via:
+`psql postgres://user:pass@localhost:35432/db_test`
 
 In order to run the server-side API tests we will need to set up a `db_test` database to run tests against.
 1. Install postgresql

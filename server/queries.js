@@ -1,12 +1,12 @@
-const db = process.env.NODE_ENV === "test" ? "db-test" : "db";
-const Pool = require('pg').Pool;
+const db = process.env.NODE_ENV === 'test' ? 'db_test' : 'db';
+const {Pool} = require('pg');
 
 const pool = new Pool({
   user: 'user',
   host: 'postgres',
   database: db,
   password: 'pass',
-  port: 5432,
+  port: 5432
 });
 
 const getArt = (request, response) => {
@@ -14,29 +14,24 @@ const getArt = (request, response) => {
     if (error) {
       throw error;
     }
+
     response.status(200).json(results.rows);
-  })
-}
+  });
+};
 
 const getArtById = (request, response) => {
   const id = parseInt(request.params.id);
   pool.query('SELECT * FROM art WHERE id = $1', [id], (error, results) => {
     if (error) {
-      throw error
+      throw error;
     }
+
     response.status(200).json(results.rows);
-  })
-}
+  });
+};
 
 const createArt = (request, response) => {
-  const {
-    name,
-    artist,
-    description,
-    width,
-    height,
-    date,
-  } = request.body;
+  const {name, artist, description, width, height, date} = request.body;
   pool.query(
     'INSERT INTO art(name, artist, description, width, height, date) VALUES ($1, $2, $3, $4, $5, $6)',
     [name, artist, description, width, height, date],
@@ -44,14 +39,15 @@ const createArt = (request, response) => {
       if (error) {
         throw error;
       }
+
       response.status(201).send(`User added with ID: ${results.insertId}`);
     }
   );
-}
+};
 
 const updateArt = (request, response) => {
   const id = parseInt(request.params.id);
-  const { name, description } = request.body;
+  const {name, description} = request.body;
   pool.query(
     'UPDATE art SET name = $1, description = $2 WHERE id = $3',
     [name, description, id],
@@ -59,24 +55,22 @@ const updateArt = (request, response) => {
       if (error) {
         throw error;
       }
+
       response.status(200).send(`Art modified with ID: ${id}`);
     }
   );
-}
+};
 
 const deleteArt = (request, response) => {
   const id = parseInt(request.params.id);
-  pool.query(
-    'DELETE FROM art WHERE id = $1',
-    [id],
-    (error, results) => {
-      if (error) {
-        throw error;
-      }
-      response.status(200).send(`Art deleted with ID: ${id}`);
+  pool.query('DELETE FROM art WHERE id = $1', [id], (error, results) => {
+    if (error) {
+      throw error;
     }
-  )
-}
+
+    response.status(200).send(`Art deleted with ID: ${id}`);
+  });
+};
 
 module.exports = {
   pool,
@@ -84,5 +78,5 @@ module.exports = {
   getArtById,
   createArt,
   updateArt,
-  deleteArt,
-}
+  deleteArt
+};

@@ -1,11 +1,12 @@
 const express = require('express');
+
 const app = express();
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 const cors = require('cors');
 const db = require('./queries');
 
 app.use(cors());
-app.enable('trust proxy')
+app.enable('trust proxy');
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
@@ -14,15 +15,15 @@ app.use(
 );
 
 app.get('/', (request, response) => {
-  console.log(`Server received this: ${request}`)
-  response.send({ 
-    data: { 
-      message:'Welcome to the API!',
+  response.send({
+    data: {
+      message: 'Welcome to the API!',
       routes: {
-        getArt: 'GET request to /art',
-        createArt: 'POST request to /art',
-        updateArt: 'PUT request to /art',
-        deleteArt: 'DELETE request to /art',
+        getArt: 'GET request to /art will return an array of art.',
+        getArtById: 'GET request to /art with an id param will return that piece of art.',
+        createArt: 'POST request to /art will create a piece of art.',
+        updateArt: 'PUT request to /art with an id param will update that piece of art.',
+        deleteArt: 'DELETE request to /art with an id param will delete that piece of art.'
       }
     }
   });

@@ -11,4 +11,4 @@ COPY . .
 
 EXPOSE 3100
 
-CMD npm start
+CMD npm start && npm test
