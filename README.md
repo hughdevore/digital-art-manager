@@ -49,14 +49,12 @@ _The Express app is running at http://192.168.99.100:3100_
 _The React SPA is running at http://192.168.99.100:3000_
 
 
-## DB MGMT & Migrations
-To access the database:
+## Database Access
+To access the app database:
 `psql postgres://user:pass@localhost:35432/db`
 
-While docker-compose up is running, in a new terminal run `docker-compose run server bash` to start a bash shell inside the app container. From there, you can run the following migration commands:
-- npm run migrate up will run the migrations.
-- npm run migrate down will roll back the migrations.
-- npm run migrate:create <migration-name> will create a new migration file in src/migrations folder.
+The test database can be accessed via:
+`psql postgres://user:pass@localhost:35432/db_test`
 
 ## Tests
 In order to access the test database during your testing you need to run these commands from within the docker container. This can be done by running: 
@@ -65,38 +63,33 @@ In order to access the test database during your testing you need to run these c
 
 Both the server and frontend directories can be tested by running `yarn test` within either directory.
 
-The test database can be accessed via:
-`psql postgres://user:pass@localhost:35432/db_test`
 
 ## Challenge
 1. Create a CRUD RESTful API for the Art, using Express and PostgreSQL
 Define an Art table for Postgres. An `Art` model should contain: name of the art, artist, description, width, height, and date created
 
-Define HTTP endpoints for art, to allow:
-- Create: create a new piece of art
-  input: name, artist, description, width, height, and date create
-  output: the newly created art object
-- Read: read a piece of art
-  input: id
-  output: art object
-- Update: update a piece of art's name or description
-  input: id, name, description
-  output: updated art object
-- Delete: delete a piece of art
-  input: id
+  - Define HTTP endpoints for art, to allow:
+    - Create: create a new piece of art
+      input: name, artist, description, width, height, and date create
+      output: the newly created art object
+    - Read: read a piece of art
+      input: id
+      output: art object
+    - Update: update a piece of art's name or description
+      input: id, name, description
+      output: updated art object
+    - Delete: delete a piece of art
+      input: id
 
 2. Create a React front end to consume the API
 
-(Style/Design does not matter at all, feel free to use minimal or no CSS)
-
-This front end should consume each API event you created
-- Create: create a button which sends random data for each required field, or use a form for user inputed data, 
-  whichever is easier/quicker for you
-- Read: display a list of all current pieces of art (anyway you want)
-- Update: allow the user to update an item in the list's title or description
-- Delete: allow the user to delete an item in the list
-
-_Note: While the Express app and React app are already bootstrapped for you, and exposed via port 3000 and 3100, remember you still need to connect the React app to the Express app. Feel free to use "proxy", 
+  - Style/Design does not matter at all, feel free to use minimal or no CSS
+  - This front end should consume each API event you created
+    - Create: create a button which sends random data for each required field, or use a form for user inputed data, 
+      whichever is easier/quicker for you
+    - Read: display a list of all current pieces of art (anyway you want)
+    - Update: allow the user to update an item in the list's title or description
+    - Delete: allow the user to delete an item in the list
 
 3. Write tests using a Javascript test framework of your choice to validate the API events
 Write tests for each CRUD event you've written, that show they work as expected.
@@ -104,12 +97,12 @@ Write tests for each CRUD event you've written, that show they work as expected.
 ## Additional Questions
 1. Each digital art file is a PNG, how would you save and serve this file from the API
 to the client? How could you use AWS to do this? How would you modify the API/Data Model
-you've created? (Answer in <500 words)
+you've created? (Answer in <500 words).
+  - When adding the ability to save/serve PNG files from the API to the client I would likely use a library like [Multer](https://www.npmjs.com/package/multer) to handle `multipart/form` data via a file upload button and save the files to the disk. If I had access to AWS S3, I would change the API from saving things on the disk to saving them on a s3 bucket. This could be done in a very similar way to Multer on the frontend but rather than saving the file to the disk, we would set up a method to save the file to our s3 bucket and consume files from our s3 bucket for displaying the images of our art.
 
 2. Write a description of a system design you would use for this app. How would you deploy this app to
 production? Feel free to dig into anything you have experience with. (Answer in <500 words)
-
-
+  - If I were designing this system for production, I would add a user management and authentication layer so that we can restrict accss to our application and db. I would most likely deploy this application to AWS and maybe even refactor it to use serverless to save costs. The build pipeline would most likely consist of a CI/CD tool spinning up the docker environment on pull requests to the codebase in GitHub and running the tests as well as the formatter/linter, then upon success and approval/merge, use something like deploybot to deploy the code to AWS.
 
 ## Appendix: Docker
 Docker will allow you to create the nodejs app, database, and front end in one line,
