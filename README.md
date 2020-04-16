@@ -59,25 +59,14 @@ While docker-compose up is running, in a new terminal run `docker-compose run se
 - npm run migrate:create <migration-name> will create a new migration file in src/migrations folder.
 
 ## Tests
-In order to access the test database during the test you sill need to run these commands from within the docker container. This can be done by running: 
+In order to access the test database during your testing you need to run these commands from within the docker container. This can be done by running: 
 
 `docker-compose run server bash`
 
-Both the server and frontend directories can be tested by running `yarn test` within either.
+Both the server and frontend directories can be tested by running `yarn test` within either directory.
 
 The test database can be accessed via:
 `psql postgres://user:pass@localhost:35432/db_test`
-
-In order to run the server-side API tests we will need to set up a `db_test` database to run tests against.
-1. Install postgresql
-  - `brew install postgresql`
-2. Start postgresql
-  - `brew services start postgresql`
-3. Access postgres using your user
-  - `psql postgres -U hughiedevore`
-4. Create the test database
-  - `CREATE DATABASE db_test`
-5. Use this db in all tests
 
 ## Challenge
 1. Create a CRUD RESTful API for the Art, using Express and PostgreSQL
