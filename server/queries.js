@@ -14,6 +14,7 @@ const getArt = (request, response) => {
     if (error) {
       throw error;
     }
+
     response.status(200).json(results.rows);
   });
 };
@@ -24,6 +25,7 @@ const getArtById = (request, response) => {
     if (error) {
       throw error;
     }
+
     response.status(200).json(results.rows);
   });
 };
@@ -37,6 +39,7 @@ const createArt = (request, response) => {
       if (error) {
         throw error;
       }
+
       response.status(201).json(results.rows);
     }
   );
@@ -52,6 +55,7 @@ const updateArt = (request, response) => {
       if (error) {
         throw error;
       }
+
       response.status(200).json(results.rows);
     }
   );
@@ -59,12 +63,17 @@ const updateArt = (request, response) => {
 
 const deleteArt = (request, response) => {
   const id = parseInt(request.params.id);
-  pool.query('DELETE FROM art WHERE id = $1 RETURNING id', [id], (error, results) => {
-    if (error) {
-      throw error;
+  pool.query(
+    'DELETE FROM art WHERE id = $1 RETURNING id',
+    [id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+
+      response.status(200).json(results.rows);
     }
-    response.status(200).json(results.rows);
-  });
+  );
 };
 
 module.exports = {
